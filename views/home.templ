@@ -1,0 +1,49 @@
+package views
+
+import "github.com/lopez/stopwatch-delta/models"
+
+templ SetView  () {
+	<form hx-post="/set-station" hx-target="#home" hx-swap="outterHTML" class="text-white inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-primary-foreground h-10 px-4 py-2 w-full max-w-md">
+		<label for="name" class="block px-2">Station Code</label>
+		<input type="text" maxlength="3" name="name" placeholder="Enter Station Code" class="uppercase text-black px-2" required/>
+		<button class="text-white inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50  text-primary-foreground hover:bg-black/50 h-10 px-4 py-2 w-full max-w-md">
+			Set Station
+		</button>
+	</form>
+}
+
+templ Home (station string, list []*models.Watcher) {
+	<html>
+		<head>
+			<!-- <meta http-equiv="refresh" content="10"/> -->
+			<link href="/css/output.css" rel="stylesheet"/>
+			<script src="https://unpkg.com/htmx.org@1.9.10"></script>
+			<title>Home</title>
+		</head>
+		<body>
+			<!--
+// v0 by Vercel.
+// https://v0.dev/t/5H3lLyQAx1q
+-->
+			<div id="home" class="flex flex-col items-center justify-center space-y-4">
+				<h1 class="text-2xl font-bold">Kiosk Watcher</h1>
+				<div class="flex space-x-2">
+					<h2 class="uppercase text-lg font-semibold">{ station }</h2>
+					<button hx-get="/" hx-target="#home" hx-swap="outerHTML" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
+						Edit
+					</button>
+				</div>
+				<div id="stopwatch-container" class="w-full max-w-md space-y-4">
+					@RenderWatchers(list)
+				</div>
+				<form hx-post="/add" hx-target="#home" hx-swap="outterHTML" class="text-white inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-primary-foreground h-10 px-4 py-2 w-full max-w-md">
+					<label for="name" class="block px-2">Machine ID</label>
+					<input type="text" name="name" placeholder="Enter name" class="uppercase text-black px-2" required/>
+					<button class="text-white inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50  text-primary-foreground hover:bg-black/50 h-10 px-4 py-2 w-full max-w-md">
+						Add Stopwatch
+					</button>
+				</form>
+			</div>
+		</body>
+	</html>
+}

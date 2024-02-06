@@ -1,0 +1,44 @@
+package views
+
+import (
+	"github.com/lopez/stopwatch-delta/models"
+)
+
+templ Watcher (w *models.Watcher) {
+	<div id={ w.Name } class="flex flex-col items-center justify-center space-y-2 border rounded-lg p-4">
+		<h2 class="uppercase text-lg font-semibold">{ w.Name }</h2>
+		@TickerCheck(w)
+		<div class="flex space-x-2">
+			@Toggle(w)
+			<button hx-get={ "/reset-watcher/" + w.Name } hx-target={ "#" + w.Name } hx-swap="outerHTML" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
+				Reset
+			</button>
+		</div>
+		<button hx-post={ "/save/" + w.Name } hx-target={ "#" + w.Name } hx-swap="outerHTML" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 w-full">
+			Save
+		</button>
+		<button hx-post={ "/delete/" + w.Name } hx-target="#home" hx-swap="outerHTML" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 w-full">
+			Remove
+		</button>
+	</div>
+}
+
+templ TickerCheck (w *models.Watcher) {
+	if w.IsRunning {
+		@Timer(w)
+	} else {
+		@DefaultTimer(w)
+	}
+}
+
+templ Toggle (w *models.Watcher) {
+	if w.IsRunning {
+		<button hx-get={ "/stop-watcher/" + w.Name } hx-target={ "#" + w.Name } hx-target={ "#" + w.Name } hx-swap="outerHTML" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
+			Stop
+		</button>
+	} else {
+		<button hx-get={ "/start-watcher/" + w.Name } hx-target={ "#" + w.Name } hx-swap="outerHTML" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
+			Start
+		</button>
+	}
+}

@@ -1,0 +1,11 @@
+package views
+
+import "github.com/lopez/stopwatch-delta/models"
+
+templ Timer(w *models.Watcher) {
+	<div id={ w.Name } hx-get={ "/get-time/" + w.Name } hx-swap="outerHTML" hx-trigger="every 1ms" class="text-3xl font-mono">{ w.FormatDuration() }</div>
+}
+
+templ DefaultTimer(w *models.Watcher) {
+	<div id={ w.Name } class="text-3xl font-mono">{ w.FormatDuration() }</div>
+}

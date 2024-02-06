@@ -1,0 +1,22 @@
+package views
+
+templ Index() {
+	<html>
+		<head>
+			<!-- <meta http-equiv="refresh" content="10"/> -->
+			<link href="/css/output.css" rel="stylesheet"/>
+			<script src="https://unpkg.com/htmx.org@1.9.10"></script>
+			<title>Home</title>
+		</head>
+		<body>
+			<!--
+// v0 by Vercel.
+// https://v0.dev/t/5H3lLyQAx1q
+-->
+			<div id="home" class="flex flex-col items-center justify-center space-y-4">
+				<h1 class="text-2xl font-bold">Kiosk Watcher</h1>
+				@SetView()
+			</div>
+		</body>
+	</html>
+}

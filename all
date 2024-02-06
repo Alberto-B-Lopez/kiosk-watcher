@@ -1,0 +1,20 @@
+~/Code/go/github.com/lopez/stopwatch-delta/..
+  bin
+  css
+  handlers
+  node_modules
+  tmp
+  views
+  │  home.templ
+  │  home_templ.go
+  │  practice.templ
+  └  practice_templ.go
+   .air.toml
+   gin-bin
+   go.mod
+   go.sum
+   main.go
+   Makefile
+   package-lock.json
+   package.json
+  󱏿 tailwind.config.js

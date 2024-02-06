@@ -1,0 +1,16 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres
+    container_name: kiosk_watcher
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_USER: postgres
+      POSTGRES_DB: db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgesql/data
+volumes:
+  postgres_data:
