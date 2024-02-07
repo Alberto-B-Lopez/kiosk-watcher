@@ -34,5 +34,5 @@ func (s *Server) Start() error {
 	app.POST("/add", AddWatcher)
 	app.POST("/save/:id", Save)
 
-	return app.Start("localhost:8080")
+	return app.Start("0.0.0.0:10000")
 }
