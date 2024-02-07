@@ -1,4 +1,4 @@
-module github.com/lopez/Kiosk-Watcher
+module github.com/lopez/kiosk-watcher
 
 go 1.21.5
 
