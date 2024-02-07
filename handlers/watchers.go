@@ -6,8 +6,8 @@ import (
 
 	"github.com/labstack/echo/v4"
 	_ "github.com/lib/pq"
-	"github.com/lopez/stopwatch-delta/models"
-	"github.com/lopez/stopwatch-delta/views"
+	"github.com/lopez/kiosk-watcher/models"
+	"github.com/lopez/kiosk-watcher/views"
 )
 
 func AddWatcher(c echo.Context) error {

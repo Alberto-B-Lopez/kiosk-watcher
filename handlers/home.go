@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"github.com/labstack/echo/v4"
-	"github.com/lopez/stopwatch-delta/views"
+	"github.com/lopez/kiosk-watcher/views"
 )
 
 func ShowIndex(c echo.Context) error {

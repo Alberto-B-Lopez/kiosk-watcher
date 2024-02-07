@@ -4,8 +4,8 @@ testdata_dir = "testdata"
 
 [build]
   args_bin = []
-  bin = "./bin/stopwatch-delta"
-  cmd = "templ generate && go build -o ./bin/stopwatch-delta ./cmd/ && make run ."
+  bin = "./bin/kiosk-watcher"
+  cmd = "templ generate && go build -o ./bin/kiosk-watcher ./cmd/ && make run ."
   delay = 1000
   exclude_dir = ["assets", "tmp", "vendor", "testdata"]
   exclude_file = []

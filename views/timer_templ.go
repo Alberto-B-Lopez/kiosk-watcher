@@ -10,7 +10,7 @@ import "context"
 import "io"
 import "bytes"
 
-import "github.com/lopez/stopwatch-delta/models"
+import "github.com/lopez/kiosk-watcher/models"
 
 func Timer(w *models.Watcher) templ.Component {
 	return templ.ComponentFunc(func(ctx context.Context, templ_7745c5c3_W io.Writer) (templ_7745c5c3_Err error) {

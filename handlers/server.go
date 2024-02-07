@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"github.com/labstack/echo/v4"
-	"github.com/lopez/stopwatch-delta/models"
+	"github.com/lopez/kiosk-watcher/models"
 )
 
 type Server struct {

@@ -1,6 +1,6 @@
 package handlers
 
-import "github.com/lopez/stopwatch-delta/models"
+import "github.com/lopez/kiosk-watcher/models"
 
 var (
 	list    = []*models.Watcher{}

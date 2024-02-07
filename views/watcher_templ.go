@@ -11,7 +11,7 @@ import "io"
 import "bytes"
 
 import (
-	"github.com/lopez/stopwatch-delta/models"
+	"github.com/lopez/kiosk-watcher/models"
 )
 
 func Watcher(w *models.Watcher) templ.Component {
