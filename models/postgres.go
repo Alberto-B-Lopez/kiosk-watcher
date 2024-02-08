@@ -40,7 +40,6 @@ func (p *PostgresStorage) dropAndCreateTable() error {
 }
 
 func (p *PostgresStorage) createTable() error {
-	fmt.Println("We in createTable func")
 	query := ` create table if not exists kiosk (
       id serial primary key,
       stn varchar(3),
@@ -54,13 +53,11 @@ func (p *PostgresStorage) createTable() error {
 	if err != nil {
 		return err
 	}
-	fmt.Println("looks like we done creating table")
 
 	return err
 }
 
 func (p *PostgresStorage) AddRow(w *Watcher) error {
-	fmt.Println("We in Add func")
 	query := `insert into kiosk
           (stn, name, duration, bag_tag_printed)
           values ($1, $2, $3, $4)`
@@ -68,6 +65,5 @@ func (p *PostgresStorage) AddRow(w *Watcher) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println("looks like we done")
 	return err
 }

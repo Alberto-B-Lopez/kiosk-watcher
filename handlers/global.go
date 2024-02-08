@@ -1,9 +1,18 @@
 package handlers
 
-import "github.com/lopez/kiosk-watcher/models"
+import (
+	"os"
+
+	"github.com/gorilla/sessions"
+	"github.com/lopez/kiosk-watcher/models"
+)
+
+type User struct {
+	Station *models.Station
+	List    []*models.Watcher
+}
 
 var (
-	list    = []*models.Watcher{}
-	station = models.NewStation("")
-	db      models.Storage
+	cookieStore = sessions.NewCookieStore([]byte(os.Getenv("SECRET"))) // Middleware
+	db          models.Storage
 )

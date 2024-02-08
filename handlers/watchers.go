@@ -11,41 +11,46 @@ import (
 )
 
 func AddWatcher(c echo.Context) error {
+	user := getUserBySession(c)
 	name := c.FormValue("name")
-	fmt.Println("Adding watcher: ", name)
 
-	for _, w := range list {
+	for _, w := range user.List {
 		if w.Name == name {
-			w.Stn = station.Name
-			return render(c, views.Home(w.Stn, list))
+			w.Stn = user.Station.Name
+			return render(c, views.Home(w.Stn, user.List))
 		}
 	}
 
-	nw := models.NewWatcher(name, station.Name)
-	list = append(list, nw)
-	return render(c, views.Home(nw.Stn, list))
+	nw := models.NewWatcher(name, user.Station.Name)
+	user.List = append(user.List, nw)
+	updateList(c, user.List)
+
+	return render(c, views.Home(nw.Stn, user.List))
 }
 
 func DeleteWatcher(c echo.Context) error {
+	user := getUserBySession(c)
 	name := c.Param("id")
-	fmt.Println("Deleting watcher: ", name)
 
-	for i, w := range list {
+	for i, w := range user.List {
 		if w.Name == name {
-			list = append(list[:i], list[i+1:]...)
-			return render(c, views.Home(station.Name, list))
+			user.List = append(user.List[:i], user.List[i+1:]...)
+			updateList(c, user.List)
+			return render(c, views.Home(user.Station.Name, user.List))
 		}
 	}
 
-	return render(c, views.Home(station.Name, list))
+	return render(c, views.Home(user.Station.Name, user.List))
 }
 
 func GetTime(c echo.Context) error {
+	user := getUserBySession(c)
 	name := c.Param("id")
 
-	for _, w := range list {
+	for _, w := range user.List {
 		if w.Name == name {
 			w.Ticker = time.Since(w.StartTime)
+			updateList(c, user.List)
 			return render(c, views.TickerCheck(w))
 		}
 	}
@@ -54,16 +59,19 @@ func GetTime(c echo.Context) error {
 }
 
 func StartWatcher(c echo.Context) error {
+	user := getUserBySession(c)
 	name := c.Param("id")
-	for _, w := range list {
+	for _, w := range user.List {
 		if w.Name == name {
 			if w.Ticker > 0 {
 				w.IsRunning = true
 				w.StartTime = time.Now().Add(-w.Ticker)
+				updateList(c, user.List)
 				return render(c, views.Watcher(w))
 			}
 			w.StartTime = time.Now()
 			w.IsRunning = true
+			updateList(c, user.List)
 
 			return render(c, views.Watcher(w))
 		}
@@ -72,11 +80,12 @@ func StartWatcher(c echo.Context) error {
 }
 
 func StopWatcher(c echo.Context) error {
+	user := getUserBySession(c)
 	name := c.Param("id")
-	fmt.Println("Stopping count for: ", name)
-	for _, w := range list {
+	for _, w := range user.List {
 		if w.Name == name {
 			w.IsRunning = false
+			updateList(c, user.List)
 
 			return render(c, views.Watcher(w))
 		}
@@ -85,12 +94,13 @@ func StopWatcher(c echo.Context) error {
 }
 
 func ResetWatcher(c echo.Context) error {
+	user := getUserBySession(c)
 	name := c.Param("id")
-	fmt.Println("Resetting count for: ", name)
-	for _, w := range list {
+	for _, w := range user.List {
 		if w.Name == name {
 			w.IsRunning = false
 			w.Ticker = 0
+			updateList(c, user.List)
 
 			return render(c, views.Watcher(w))
 		}
@@ -99,8 +109,9 @@ func ResetWatcher(c echo.Context) error {
 }
 
 func Save(c echo.Context) error {
+	user := getUserBySession(c)
 	name := c.Param("id")
-	for _, w := range list {
+	for _, w := range user.List {
 		if w.Name == name {
 			err := db.AddRow(w)
 			if err != nil {
@@ -109,6 +120,7 @@ func Save(c echo.Context) error {
 			w.IsRunning = false
 			w.Ticker = 0
 			fmt.Println("saved")
+			updateList(c, user.List)
 
 			return render(c, views.Watcher(w))
 		}
