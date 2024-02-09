@@ -30,7 +30,7 @@ func ShowIndex(c echo.Context) error {
 		}
 	}
 
-	return render(c, views.Index())
+	return render(c, views.Setup())
 }
 
 func ShowHome(c echo.Context) error {
@@ -47,5 +47,5 @@ func ShowEdit(c echo.Context) error {
 	user := getUserBySession(c)
 	user.Station.Name = ""
 	updateStation(c, user.Station.Name)
-	return render(c, views.Index())
+	return render(c, views.Setup())
 }

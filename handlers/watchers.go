@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/labstack/echo/v4"
@@ -13,6 +14,8 @@ import (
 func AddWatcher(c echo.Context) error {
 	user := getUserBySession(c)
 	name := c.FormValue("name")
+	name = strings.TrimSpace(name)
+	name = strings.Join(strings.Fields(name), "")
 
 	for _, w := range user.List {
 		if w.Name == name {

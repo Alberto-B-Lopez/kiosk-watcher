@@ -4,7 +4,6 @@ go 1.21.5
 
 require (
 	github.com/a-h/templ v0.2.543
-	github.com/google/uuid v1.6.0
 	github.com/gorilla/sessions v1.2.1
 	github.com/labstack/echo-contrib v0.15.0
 	github.com/labstack/echo/v4 v4.11.4
