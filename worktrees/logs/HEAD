@@ -4,3 +4,4 @@
 2a1298e6bff8094d6fa12f077c1bb8438e6acd41 0000000000000000000000000000000000000000 Alberto <Mralbertoblopez@gmail.com> 1707769734 -0500	Branch: renamed refs/heads/test to refs/heads/main
 0000000000000000000000000000000000000000 2a1298e6bff8094d6fa12f077c1bb8438e6acd41 Alberto <Mralbertoblopez@gmail.com> 1707769734 -0500	Branch: renamed refs/heads/test to refs/heads/main
 2a1298e6bff8094d6fa12f077c1bb8438e6acd41 2a1298e6bff8094d6fa12f077c1bb8438e6acd41 Alberto <Mralbertoblopez@gmail.com> 1707770183 -0500	checkout: moving from main to main
+ff915a22fc1da2257031577c5618672e853a81db d36b68094ac94007827366d3ca6781bca9dcf28d Alberto <Mralbertoblopez@gmail.com> 1707770281 -0500	commit (amend): V1.3 Toggle with Clean up
