@@ -2,17 +2,22 @@ package handlers
 
 import (
 	"fmt"
+	"sync"
 
 	"github.com/a-h/templ"
 	"github.com/labstack/echo/v4"
 	"github.com/lopez/kiosk-watcher/models"
 )
 
+var sessionMutx sync.Mutex
+
 func render(e echo.Context, t templ.Component) error {
 	return t.Render(e.Request().Context(), e.Response())
 }
 
 func getUserBySession(c echo.Context) *User {
+	sessionMutx.Lock()
+	defer sessionMutx.Unlock()
 	sess, _ := cookieStore.Get(c.Request(), "session")
 	if u, ok := sess.Values["user"]; ok {
 		if user, ok := u.(*User); ok {
