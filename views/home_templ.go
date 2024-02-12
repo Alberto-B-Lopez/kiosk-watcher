@@ -31,7 +31,7 @@ func Home(station string, list []*models.Watcher) templ.Component {
 				templ_7745c5c3_Buffer = templ.GetBuffer()
 				defer templ.ReleaseBuffer(templ_7745c5c3_Buffer)
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"home\" class=\"overscroll-contain overflow-auto justify-center items-center bg-gradient-to-r dark:from-blue-900 dark:via-red-800 dark:to-blue-700\"><h1 class=\"flex justify-center items-center text-white text-2xl font-bold\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"home\" class=\"overscroll-contain overflow-auto flex-col h-screen justify-center items-center bg-gradient-to-r dark:from-blue-900 dark:via-red-800 dark:to-blue-700\"><h1 class=\"flex justify-center items-center text-white text-2xl font-bold\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
