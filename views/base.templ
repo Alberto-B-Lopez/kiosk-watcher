@@ -4,10 +4,11 @@ templ Base() {
 	<html>
 		<head>
 			<link href="/css/output.css" rel="stylesheet"/>
+			<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 			<script src="https://unpkg.com/htmx.org@1.9.10"></script>
 			<title>Home</title>
 		</head>
-		<body class="flex flex-col h-screen justify-center items-center bg-gradient-to-r from-blue-900 via-red-800 to-blue-700 dark:from-blue-900 dark:via-red-800 dark:to-blue-700">
+		<body class="flex flex-grow min-h-full flex-col h-screen justify-center items-center overscroll-auto bg-gradient-to-r from-blue-900 via-red-800 to-blue-700 dark:from-blue-900 dark:via-red-800 dark:to-blue-700">
 			{ children... }
 		</body>
 	</html>

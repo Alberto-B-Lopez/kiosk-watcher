@@ -7,38 +7,50 @@ import (
 templ Watcher (w *models.Watcher) {
 	<div id={ w.Name } class="flex flex-col items-center justify-center space-y-2 border rounded-lg p-4">
 		<h2 class="text-white uppercase text-lg font-semibold">{ w.Name }</h2>
-		@TickerCheck(w)
-		<div class="flex space-x-2">
-			@Toggle(w)
-		</div>
-		<button hx-post={ "/save/" + w.Name } hx-target={ "#" + w.Name } hx-swap="outerHTML" class="bg-gradient-to-r from-green-500 via-green-100 to-green-500 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 w-full">
+		@WatcherState(w)
+		@PrintToggle(w)
+		<button
+			hx-post={ "/save/" + w.Name }
+			hx-target={ "#" + w.Name }
+			hx-swap="outerHTML"
+			class="bg-gradient-to-r from-green-500 via-green-100 to-green-500 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 w-full"
+		>
 			Save
 		</button>
-		<button hx-post={ "/delete/" + w.Name } hx-target="#home" hx-swap="outerHTML" class="bg-gradient-to-r from-red-500 via-red-100 to-red-500 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 w-full ">
+		<button hx-post={ "/delete/" + w.Name } hx-target="#stopwatch-container" hx-swap="outerHTML" class="bg-gradient-to-r from-red-500 via-red-100 to-red-500 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2 w-full ">
 			Remove
 		</button>
 	</div>
 }
 
-templ TickerCheck (w *models.Watcher) {
-	if w.IsRunning {
-		@Timer(w)
-	} else {
-		@DefaultTimer(w)
-	}
+templ WatcherState(w *models.Watcher) {
+	<div id={ "ticker" + w.Name }>
+		@TimerCheck(w)
+		<div class="flex space-x-2">
+			@Toggle(w)
+		</div>
+	</div>
 }
 
 templ Toggle (w *models.Watcher) {
 	if w.IsRunning {
-		<button hx-get={ "/stop-watcher/" + w.Name } hx-target={ "#" + w.Name } hx-target={ "#" + w.Name } hx-swap="outerHTML" class=" bg-red-500 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
+		<button hx-get={ "/stop-watcher/" + w.Name } hx-target={ "#" + "ticker" + w.Name } hx-swap="outerHTML" class=" bg-red-500 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
 			Stop
 		</button>
 	} else {
-		<button hx-get={ "/start-watcher/" + w.Name } hx-target={ "#" + w.Name } hx-swap="outerHTML" class="bg-green-500 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
+		<button hx-get={ "/start-watcher/" + w.Name } hx-target={ "#" + "ticker" + w.Name } hx-swap="outerHTML" class="bg-green-500 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
 			Start
 		</button>
-		<button hx-get={ "/reset-watcher/" + w.Name } hx-target={ "#" + w.Name } hx-swap="outerHTML" class="bg-yellow-500 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
+		<button hx-get={ "/reset-watcher/" + w.Name } hx-target={ "#" + "ticker" + w.Name } hx-swap="outerHTML" class="bg-yellow-500 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
 			Reset
 		</button>
 	}
+}
+
+templ PrintToggle(w *models.Watcher) {
+	<label class="relative inline-flex items-center cursor-pointer">
+		<input type="checkbox" name="myCheckbox" hx-trigger="change" hx-post={ "/bag-tag/" + w.Name } class="sr-only peer"/>
+		<div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+		<span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Bag Tag</span>
+	</label>
 }

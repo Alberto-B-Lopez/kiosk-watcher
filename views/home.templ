@@ -4,17 +4,15 @@ import "github.com/lopez/kiosk-watcher/models"
 
 templ Home (station string, list []*models.Watcher) {
 	@Base() {
-		<div id="home" class="flex flex-col h-screen justify-center items-center bg-gradient-to-r dark:from-blue-900 dark:via-red-800 dark:to-blue-700">
-			<h1 class="text-white text-2xl font-bold">Kiosk Watcher</h1>
-			<div class="flex space-x-2">
+		<div id="home" class="overscroll-contain overflow-auto justify-center items-center bg-gradient-to-r dark:from-blue-900 dark:via-red-800 dark:to-blue-700">
+			<h1 class="flex justify-center items-center text-white text-2xl font-bold">Kiosk Watcher</h1>
+			<div class="flex justify-center items-center space-x-2">
 				<button hx-get="/edit" hx-target="#home" hx-swap="outerHTML" class="bg-black text-white uppercase inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
 					{ station }
 				</button>
 			</div>
-			<div id="stopwatch-container" class="w-full max-w-md space-y-4">
-				@RenderWatchers(list)
-			</div>
-			<form hx-post="/add" hx-target="#home" hx-swap="outterHTML" class="text-white inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-primary-foreground h-10 px-4 py-2 w-full max-w-md">
+			@RenderWatchers(list)
+			<form hx-post="/add" hx-target="#home" hx-swap="outerHTML" class="text-white inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-primary-foreground h-10 px-4 py-2 w-full max-w-md">
 				<label for="name" class="block px-2">Machine ID</label>
 				<input type="text" name="name" placeholder="Enter name" class="uppercase text-black px-2" required/>
 				<button class="text-white inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50  text-primary-foreground hover:bg-black/50 h-10 px-4 py-2 w-full max-w-md">

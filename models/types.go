@@ -24,7 +24,9 @@ type Watcher struct {
 	Stn           string
 	Name          string
 	Ticker        time.Duration
+	CurrTime      time.Time
 	StartTime     time.Time
+	EndTime       time.Time
 	IsRunning     bool
 	CurrnetTime   time.Time
 	BagTagPrinted bool

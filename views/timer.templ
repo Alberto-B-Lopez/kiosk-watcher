@@ -3,9 +3,17 @@ package views
 import "github.com/lopez/kiosk-watcher/models"
 
 templ Timer(w *models.Watcher) {
-	<div id={ w.Name } hx-get={ "/get-time/" + w.Name } hx-swap="outerHTML" hx-trigger="every 1ms" class="text-white text-3xl font-mono">{ w.FormatDuration() }</div>
+	<div id={ w.Name } hx-get={ "/get-time/" + w.Name } hx-swap="outerHTML" hx-trigger="every 1ms" class="flex flex-col items-center justify-center text-white text-3xl font-mono">{ w.FormatDuration() }</div>
 }
 
 templ DefaultTimer(w *models.Watcher) {
-	<div id={ w.Name } class="text-white text-3xl font-mono">{ w.FormatDuration() }</div>
+	<div id={ w.Name } class="flex flex-col items-center justify-center text-white text-3xl font-mono">{ w.FormatDuration() }</div>
+}
+
+templ TimerCheck (w *models.Watcher) {
+	if w.IsRunning {
+		@Timer(w)
+	} else {
+		@DefaultTimer(w)
+	}
 }

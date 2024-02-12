@@ -44,8 +44,10 @@ func (p *PostgresStorage) createTable() error {
       id serial primary key,
       stn varchar(3),
       name varchar(255),
-      duration varchar(255) ,
+      duration varchar(255),
       bag_tag_printed bool,
+      start_time timestamp,
+      end_time timestamp,
       created_at timestamp default current_timestamp
     )`
 
@@ -59,9 +61,9 @@ func (p *PostgresStorage) createTable() error {
 
 func (p *PostgresStorage) AddRow(w *Watcher) error {
 	query := `insert into kiosk
-          (stn, name, duration, bag_tag_printed)
-          values ($1, $2, $3, $4)`
-	_, err := p.db.Exec(query, w.Stn, w.Name, w.Ticker.String(), w.BagTagPrinted)
+          (stn, name, duration, bag_tag_printed, start_time, end_time)
+          values ($1, $2, $3, $4, $5, $6)`
+	_, err := p.db.Exec(query, w.Stn, w.Name, w.Ticker.String(), w.BagTagPrinted, w.StartTime, w.EndTime)
 	if err != nil {
 		return err
 	}

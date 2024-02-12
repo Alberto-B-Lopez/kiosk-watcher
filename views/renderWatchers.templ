@@ -3,7 +3,9 @@ package views
 import "github.com/lopez/kiosk-watcher/models"
 
 templ RenderWatchers (list []*models.Watcher) {
-	for _, item := range list {
-		@Watcher(item)
-	}
+	<div id="stopwatch-container" class="w-full max-w-md space-y-4">
+		for _, item := range list {
+			@Watcher(item)
+		}
+	</div>
 }
