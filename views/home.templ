@@ -13,7 +13,7 @@ templ Home (station string, list []*models.Watcher) {
 			</div>
 			@RenderWatchers(list)
 			<form hx-post="/add" hx-target="#home" hx-swap="outerHTML" class="text-white inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-black text-primary-foreground h-10 px-4 py-2 w-full max-w-md">
-				<label for="name" class="block px-2">Machine ID</label>
+				<label class="block px-2">Machine ID</label>
 				<input type="text" name="name" placeholder="Enter name" class="uppercase text-black px-2" required/>
 				<button class="text-white inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50  text-primary-foreground hover:bg-black/50 h-10 px-4 py-2 w-full max-w-md">
 					Add Stopwatch
