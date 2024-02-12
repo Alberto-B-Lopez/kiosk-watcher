@@ -45,7 +45,7 @@ func updateStation(c echo.Context, station string) (*User, error) {
 	return &User{}, nil
 }
 
-func updateList(c echo.Context, list []*models.Watcher) {
+func updateList(c echo.Context, list []*models.Watcher) error {
 	sess, _ := cookieStore.Get(c.Request(), "session")
 	if u, ok := sess.Values["user"]; ok {
 		if user, ok := u.(*User); ok {
@@ -53,7 +53,9 @@ func updateList(c echo.Context, list []*models.Watcher) {
 			if err := sess.Save(c.Request(), c.Response()); err != nil {
 				// Handle the error
 				fmt.Println("Error saving session:", err)
+				return err
 			}
 		}
 	}
+	return nil
 }

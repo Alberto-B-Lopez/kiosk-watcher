@@ -26,7 +26,10 @@ func AddWatcher(c echo.Context) error {
 
 	nw := models.NewWatcher(name, user.Station.Name)
 	user.List = append(user.List, nw)
-	updateList(c, user.List)
+	err := updateList(c, user.List)
+	if err != nil {
+		return render(c, views.Error())
+	}
 
 	return render(c, views.Home(nw.Stn, user.List))
 }
@@ -38,7 +41,11 @@ func DeleteWatcher(c echo.Context) error {
 	for i, w := range user.List {
 		if w.Name == name {
 			user.List = append(user.List[:i], user.List[i+1:]...)
-			updateList(c, user.List)
+			err := updateList(c, user.List)
+			if err != nil {
+				return render(c, views.Error())
+			}
+
 			return render(c, views.RenderWatchers(user.List))
 		}
 	}
@@ -53,7 +60,11 @@ func GetTime(c echo.Context) error {
 	for _, w := range user.List {
 		if w.Name == name {
 			w.Ticker = time.Since(w.CurrTime)
-			updateList(c, user.List)
+			err := updateList(c, user.List)
+			if err != nil {
+				return render(c, views.Error())
+			}
+
 			return render(c, views.TimerCheck(w))
 		}
 	}
@@ -69,13 +80,20 @@ func StartWatcher(c echo.Context) error {
 			if w.Ticker > 0 {
 				w.IsRunning = true
 				w.CurrTime = time.Now().Add(-w.Ticker)
-				updateList(c, user.List)
+				err := updateList(c, user.List)
+				if err != nil {
+					return render(c, views.Error())
+				}
+
 				return render(c, views.WatcherState(w))
 			}
 			w.StartTime = time.Now()
 			w.CurrTime = time.Now()
 			w.IsRunning = true
-			updateList(c, user.List)
+			err := updateList(c, user.List)
+			if err != nil {
+				return render(c, views.Error())
+			}
 
 			return render(c, views.WatcherState(w))
 		}
@@ -90,7 +108,10 @@ func StopWatcher(c echo.Context) error {
 		if w.Name == name {
 			w.IsRunning = false
 			w.EndTime = time.Now()
-			updateList(c, user.List)
+			err := updateList(c, user.List)
+			if err != nil {
+				return render(c, views.Error())
+			}
 
 			return render(c, views.WatcherState(w))
 		}
@@ -105,7 +126,10 @@ func ResetWatcher(c echo.Context) error {
 		if w.Name == name {
 			w.IsRunning = false
 			w.Ticker = 0
-			updateList(c, user.List)
+			err := updateList(c, user.List)
+			if err != nil {
+				return render(c, views.Error())
+			}
 
 			return render(c, views.WatcherState(w))
 		}
@@ -128,8 +152,10 @@ func Save(c echo.Context) error {
 				w.EndTime = time.Now()
 			}
 			w.Ticker = 0
-			fmt.Println("saved")
-			updateList(c, user.List)
+			err = updateList(c, user.List)
+			if err != nil {
+				return render(c, views.Error())
+			}
 
 			return render(c, views.Watcher(w))
 		}
@@ -144,11 +170,17 @@ func BagTagToggle(c echo.Context) error {
 		if w.Name == name {
 			if c.FormValue("myCheckbox") == "on" {
 				w.BagTagPrinted = true
-				updateList(c, user.List)
+				err := updateList(c, user.List)
+				if err != nil {
+					return render(c, views.Error())
+				}
 			} else {
 				fmt.Println(w.BagTagPrinted)
 				w.BagTagPrinted = false
-				updateList(c, user.List)
+				err := updateList(c, user.List)
+				if err != nil {
+					return render(c, views.Error())
+				}
 			}
 
 			return render(c, views.Watcher(w))
