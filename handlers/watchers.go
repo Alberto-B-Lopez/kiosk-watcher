@@ -168,14 +168,13 @@ func BagTagToggle(c echo.Context) error {
 	name := c.Param("id")
 	for _, w := range user.List {
 		if w.Name == name {
-			if c.FormValue("myCheckbox") == "on" {
+			if c.FormValue("bagtag") == "on" {
 				w.BagTagPrinted = true
 				err := updateList(c, user.List)
 				if err != nil {
 					return render(c, views.Error())
 				}
 			} else {
-				fmt.Println(w.BagTagPrinted)
 				w.BagTagPrinted = false
 				err := updateList(c, user.List)
 				if err != nil {
@@ -194,14 +193,13 @@ func BoardingPassToggle(c echo.Context) error {
 	name := c.Param("id")
 	for _, w := range user.List {
 		if w.Name == name {
-			if c.FormValue("myCheckbox") == "on" {
+			if c.FormValue("boardingpass") == "on" {
 				w.BoardingPassPrinted = true
 				err := updateList(c, user.List)
 				if err != nil {
 					return render(c, views.Error())
 				}
 			} else {
-				fmt.Println(w.BagTagPrinted)
 				w.BoardingPassPrinted = false
 				err := updateList(c, user.List)
 				if err != nil {
