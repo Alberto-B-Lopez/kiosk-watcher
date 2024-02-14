@@ -188,3 +188,29 @@ func BagTagToggle(c echo.Context) error {
 	}
 	return render(c, views.Error())
 }
+
+func BoardingPassToggle(c echo.Context) error {
+	user := getUserBySession(c)
+	name := c.Param("id")
+	for _, w := range user.List {
+		if w.Name == name {
+			if c.FormValue("myCheckbox") == "on" {
+				w.BoardingPassPrinted = true
+				err := updateList(c, user.List)
+				if err != nil {
+					return render(c, views.Error())
+				}
+			} else {
+				fmt.Println(w.BagTagPrinted)
+				w.BoardingPassPrinted = false
+				err := updateList(c, user.List)
+				if err != nil {
+					return render(c, views.Error())
+				}
+			}
+
+			return render(c, views.Watcher(w))
+		}
+	}
+	return render(c, views.Error())
+}

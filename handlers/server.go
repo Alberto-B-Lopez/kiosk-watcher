@@ -53,7 +53,8 @@ func (s *Server) Start() error {
 	app.POST("/delete/:id", DeleteWatcher)
 	app.POST("/add", AddWatcher)
 	app.POST("/save/:id", Save)
-  app.POST("/bag-tag/:id", BagTagToggle)
+	app.POST("/bag-tag/:id", BagTagToggle)
+	app.POST("/boarding-pass/:id", BagTagToggle)
 
 	return app.Start("0.0.0.0:10000")
 }

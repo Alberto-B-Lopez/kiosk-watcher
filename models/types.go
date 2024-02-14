@@ -20,16 +20,17 @@ func NewStation(name string) *Station {
 }
 
 type Watcher struct {
-	ID            int
-	Stn           string
-	Name          string
-	Ticker        time.Duration
-	CurrTime      time.Time
-	StartTime     time.Time
-	EndTime       time.Time
-	IsRunning     bool
-	CurrnetTime   time.Time
-	BagTagPrinted bool
+	ID                  int
+	Stn                 string
+	Name                string
+	Ticker              time.Duration
+	CurrTime            time.Time
+	StartTime           time.Time
+	EndTime             time.Time
+	IsRunning           bool
+	CurrnetTime         time.Time
+	BagTagPrinted       bool
+	BoardingPassPrinted bool
 }
 
 func NewWatcher(name string, station string) *Watcher {
