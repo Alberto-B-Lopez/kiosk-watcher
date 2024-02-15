@@ -16,6 +16,7 @@ func AddWatcher(c echo.Context) error {
 	name := c.FormValue("name")
 	name = strings.TrimSpace(name)
 	name = strings.Join(strings.Fields(name), "")
+	name = strings.ToUpper(name)
 
 	for _, w := range user.List {
 		if w.Name == name {
@@ -142,6 +143,7 @@ func Save(c echo.Context) error {
 	name := c.Param("id")
 	for _, w := range user.List {
 		if w.Name == name {
+			w.EndTime = time.Now()
 			err := db.AddRow(w)
 			if err != nil {
 				fmt.Println("Error adding row: ", err)
@@ -149,8 +151,8 @@ func Save(c echo.Context) error {
 
 			if w.IsRunning {
 				w.IsRunning = false
-				w.EndTime = time.Now()
 			}
+
 			w.Ticker = 0
 			err = updateList(c, user.List)
 			if err != nil {

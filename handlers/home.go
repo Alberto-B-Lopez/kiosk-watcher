@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/labstack/echo/v4"
 	"github.com/lopez/kiosk-watcher/models"
@@ -36,7 +37,10 @@ func ShowIndex(c echo.Context) error {
 func ShowHome(c echo.Context) error {
 	user := getUserBySession(c)
 	if user.Station.Name == "" {
-		user.Station.Name = c.FormValue("name")
+		user.Station.Name = strings.ToUpper(c.FormValue("name"))
+		for _, w := range user.List {
+			w.Stn = user.Station.Name
+		}
 		updateStation(c, user.Station.Name)
 	}
 
@@ -46,6 +50,9 @@ func ShowHome(c echo.Context) error {
 func ShowEdit(c echo.Context) error {
 	user := getUserBySession(c)
 	user.Station.Name = ""
+	for _, w := range user.List {
+		w.Stn = user.Station.Name
+	}
 	updateStation(c, user.Station.Name)
 	return render(c, views.Setup())
 }
